@@ -16,6 +16,7 @@ import img from '../../images/film-poster-placeholder.png'
 import { Link } from "react-router-dom";
 import Avatar from "@material-ui/core/Avatar";
 import { MoviesContext } from "../../contexts/moviesContext";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 
 const useStyles = makeStyles({
   card: { maxWidth: 345 },
@@ -28,6 +29,7 @@ const useStyles = makeStyles({
 export default function MovieCard({ movie, action }) {
   const classes = useStyles();
   const { favorites, addToFavorites } = useContext(MoviesContext);
+  const { towatches } = useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
@@ -35,10 +37,16 @@ export default function MovieCard({ movie, action }) {
     movie.favorite = false
   }
 
-  const handleAddToFavorite = (e) => {
-    e.preventDefault();
-    addToFavorites(movie);
-  };
+  if (towatches.find((id) => id === movie.id)) {
+    movie.towatch = true;
+  } else {
+    movie.towatch = false
+  }
+
+  // const handleAddToFavorite = (e) => {
+  //   e.preventDefault();
+  //   addToFavorites(movie);
+  // };
 
 
   return (
@@ -50,8 +58,12 @@ export default function MovieCard({ movie, action }) {
           <Avatar className={classes.avatar}>
             <FavoriteIcon />
           </Avatar>
-        ) : null
-      }
+) : (movie.towatch ? (
+  <Avatar className={classes.avatar}>
+    <PlaylistAddCheckIcon />
+  </Avatar>
+) : null)
+}
       title={
         <Typography variant="h5" component="p">
           {movie.title}{" "}

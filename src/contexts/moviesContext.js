@@ -14,6 +14,10 @@ const MoviesContextProvider = (props) => {
     setFavorites(newFavorites)
   };
 
+  const addToWatch = (movie) => {
+   
+  };
+
   // We will use this function in a later section
   const removeFromFavorites = (movie) => {
     setFavorites( favorites.filter(
@@ -29,6 +33,7 @@ const MoviesContextProvider = (props) => {
     <MoviesContext.Provider
       value={{
         favorites,
+        addToWatch,
         addToFavorites,
         removeFromFavorites,
         addReview,
